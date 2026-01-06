@@ -53,16 +53,27 @@ const initializeServices = async () => {
   try {
     await connectDatabase();
     
-    // Initialize Kafka Producer
-    kafkaProducer = new ProducerService();
-    await kafkaProducer.initialize();
+    // Initialize Kafka Producer (optional - don't crash if it fails)
+    try {
+      kafkaProducer = new ProducerService();
+      await kafkaProducer.initialize();
+      console.log('Kafka initialized');
+    } catch (kafkaError) {
+      console.warn('Kafka initialization failed, continuing without Kafka:', kafkaError);
+      // Don't exit - server can run without Kafka
+    }
 
-    const socketHandler = new SocketHandler(io);
-    await socketHandler.initialize();
+    try {
+      const socketHandler = new SocketHandler(io);
+      await socketHandler.initialize();
+      console.log('Socket handler initialized');
+    } catch (socketError) {
+      console.warn('Socket initialization warning:', socketError);
+    }
 
-    console.log('All services initialized');
+    console.log('Core services initialized');
   } catch (error) {
-    console.error('Service initialization failed:', error);
+    console.error('Critical service initialization failed:', error);
     process.exit(1);
   }
 };
