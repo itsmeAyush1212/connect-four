@@ -19,8 +19,9 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "@types/cors": "^2.8.17",
-    "@types/express": "^4.17.21",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^4.17.25",
+    "@types/mongoose": "^5.11.96",
     "@types/node": "^20.19.27",
     "@types/uuid": "^9.0.8",
     "nodemon": "^3.0.2",
